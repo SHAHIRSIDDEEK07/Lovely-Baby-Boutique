@@ -1,0 +1,23 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16' # Specify the Node.js version you are using
+
+      - name: Check for package-lock.json
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "package-lock.json not found. Generating it..."
+            npm install
+          else
+            echo "package-lock.json exists."
+          fi
+
+      - name: Install dependencies
+        run: npm ci
